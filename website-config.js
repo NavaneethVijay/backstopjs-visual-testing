@@ -1,8 +1,12 @@
 export const websites = [
   {
-    name: "your_website_name",
-    referenceDomain: "your_reference_domain.com",
-    domain: "your_production_domain.com",
+    name: "kreo_website",
+    referenceDomain: "kreo-tech.com",
+    domain: "kreo-tech.com",
+    sitemap: {
+      endpoint: "/sitemap_products_1.xml?from=7268530946225&to=8158257053873",
+      format: "xml"
+    },
     defaultStorageState: {
       cookies: [
         {

@@ -2,18 +2,37 @@ import fs from "fs/promises";
 import path from "path";
 import fetch from "node-fetch";
 import fse from "fs-extra";
+import xml2js from 'xml2js';
 import defaultConfig from "../backstop-default.json" assert { type: "json" };
 
-export const JSON_API_ENDPOINT = "/api/your-sitemap-json-location";
+async function parseXmlResponse(response) {
+  const parser = new xml2js.Parser();
+  const text = await response.text();
+  const result = await parser.parseStringPromise(text);
 
-async function getUrlsFromJsonApi(referenceDomain) {
-  const sitemapUrl = "https://" + referenceDomain + JSON_API_ENDPOINT;
+  // Extract URLs from sitemap XML format
+  const urls = result.urlset.url.map(entry => {
+    const loc = entry.loc[0];
+    return new URL(loc).pathname;
+  });
+
+  return urls;
+}
+
+async function getUrlsFromApi(referenceDomain, sitemap) {
+  const sitemapUrl = "https://" + referenceDomain + sitemap.endpoint;
 
   try {
-    const { paths } = await fetch(sitemapUrl).then((res) => res.json());
-    return paths;
+    const response = await fetch(sitemapUrl);
+
+    if (sitemap.format === 'xml') {
+      return await parseXmlResponse(response);
+    } else {
+      const { paths } = await response.json();
+      return paths;
+    }
   } catch (error) {
-    console.error("Error fetching JSON API:", error);
+    console.error(`Error fetching ${sitemap.format.toUpperCase()} sitemap:`, error);
     return [];
   }
 }
@@ -26,7 +45,7 @@ function generateStorageState(config) {
   };
 
   if(!defaultStorageState){
-    return storageState
+    return storageState;
   }
 
   if (defaultStorageState.hasOwnProperty("cookies")) {
@@ -67,18 +86,22 @@ function generateStorageState(config) {
       origin: "https://" + referenceDomain,
       localStorage: localStorages,
     };
-    storageState.origins.push(domainLS)
-    storageState.origins.push(referenceDomainLS)
+    storageState.origins.push(domainLS);
+    storageState.origins.push(referenceDomainLS);
   }
 
   return storageState;
 }
 
 export const configGenerator = async (config) => {
-  const { referenceDomain, name, domain, defaultStorageState = null } = config;
-  let urls = [];
+  const { referenceDomain, name, domain, sitemap, defaultStorageState = null } = config;
 
-  urls = await getUrlsFromJsonApi(referenceDomain);
+  if (!sitemap || !sitemap.endpoint || !sitemap.format) {
+    console.error('Sitemap configuration is missing or invalid');
+    return;
+  }
+
+  let urls = await getUrlsFromApi(referenceDomain, sitemap);
 
   if (urls.length === 0) {
     console.error("No URLs found. Exiting configuration generation.");
@@ -117,7 +140,6 @@ export const configGenerator = async (config) => {
   console.log("StorageState saved to", filePath);
 
   const scenarios = urls.map((url, index) => {
-    // if json append the referencedomain with url
     let urlValue = url;
     let refUrl = url;
 
