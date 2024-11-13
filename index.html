@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visual Regression Testing</title>
+    <style>
+      @font-face {
+          font-family: 'latoregular';
+          src: url('./src/assets/fonts/lato-regular-webfont.woff2') format('woff2'),
+              url('./src/assets/fonts/lato-regular-webfont.woff') format('woff');
+          font-weight: 400;
+          font-style: normal;
+      }
+      @font-face {
+          font-family: 'latobold';
+          src: url('./src/assets/fonts/lato-bold-webfont.woff2') format('woff2'),
+              url('./src/assets/fonts/lato-bold-webfont.woff') format('woff');
+          font-weight: 700;
+          font-style: normal;
+      }
+
+      * {
+        font-family: latoregular;
+      }
+
+      .ReactModal__Body--open {
+          overflow: hidden;
+      }
+      .ReactModal__Body--open .header {
+        display: none;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

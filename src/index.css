@@ -1,0 +1,64 @@
+body {
+    margin: 0;
+}
+
+/* Pagination container */
+ul[role="navigation"] {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Pagination items */
+ul[role="navigation"] li {
+    display: inline-block;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+/* Pagination links */
+ul[role="navigation"] li a {
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: #f2f2f2;
+    color: #333;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+}
+
+/* Pagination links on hover */
+ul[role="navigation"] li a:hover {
+    background-color: #ddd;
+}
+
+/* Selected pagination link */
+ul[role="navigation"] li.selected a {
+    background-color: #10384f;
+    color: #fff;
+}
+
+/* Disabled pagination links */
+ul[role="navigation"] li.previous a[aria-disabled="true"],
+ul[role="navigation"] li.next a[aria-disabled="true"] {
+    pointer-events: none;
+    cursor: default;
+    color: #999;
+}
+
+/* Break separator */
+ul[role="navigation"] li.break {
+    font-size: 0.8em;
+    margin: 0 10px;
+}
+
+a {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }

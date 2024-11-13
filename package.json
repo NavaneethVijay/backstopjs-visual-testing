@@ -1,0 +1,49 @@
+{
+  "name": "backstopjs-ui",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "backstop:generate": "node scripts/generate.js",
+    "backstop:reference": "node scripts/references.js",
+    "backstop:test": "node scripts/test.js"
+  },
+  "dependencies": {
+    "backstop-twentytwenty": "^1.1.0",
+    "backstopjs": "^6.3.22",
+    "fs": "^0.0.1-security",
+    "fs-extra": "^11.2.0",
+    "localforage": "^1.10.0",
+    "match-sorter": "^6.3.4",
+    "node-fetch": "^3.3.2",
+    "playwright": "^1.42.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-modal": "^3.16.1",
+    "react-paginate": "^8.2.0",
+    "react-redux": "^9.1.0",
+    "react-router-dom": "^6.22.2",
+    "react-sticky": "^6.0.3",
+    "react-toggle-button": "^2.2.0",
+    "react-visibility-sensor": "^5.1.1",
+    "redux": "^5.0.1",
+    "sort-by": "^1.2.0",
+    "styled-components": "^6.1.8",
+    "xml2js": "^0.6.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.42.0",
+    "@types/react": "^18.2.56",
+    "@types/react-dom": "^18.2.19",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "vite": "^5.1.4"
+  }
+}

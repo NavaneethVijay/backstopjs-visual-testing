@@ -1,0 +1,36 @@
+{
+    "id": "backstop_default",
+    "viewports": [
+      {
+        "label": "desktop",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "label": "mobile",
+        "width": 430,
+        "height": 932
+      }
+    ],
+    "onBeforeScript": "playwright/onBefore.cjs",
+    "onReadyScript": "playwright/onReady.cjs",
+    "scenarios": [],
+    "paths": {
+        "bitmaps_reference": "public/bitmaps_reference",
+        "bitmaps_test": "public/bitmaps_test",
+        "engine_scripts": "backstop_data/engine_scripts",
+        "html_report": "public/report",
+        "ci_report": "public/ci_report",
+        "json_report": "reports"
+      },
+    "report": ["json"],
+    "engine": "playwright",
+    "engineOptions": {
+      "browser": "chromium",
+      "storageState": "local-storage-file.json"
+    },
+    "asyncCaptureLimit": 5,
+    "asyncCompareLimit": 10,
+    "debug": false,
+    "debugWindow": false
+  }
