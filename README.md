@@ -50,7 +50,7 @@ For more configuration visit: https://github.com/garris/BackstopJS
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd visual-regression-testing
+cd backstopjs-visual-testing
 ```
 
 2. Install dependencies:
