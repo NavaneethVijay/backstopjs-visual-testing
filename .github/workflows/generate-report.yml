@@ -1,0 +1,65 @@
+name: Run your visual comparison
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_id:
+        description: "Test Name"
+        required: true
+
+jobs:
+  test_and_deploy:
+    name: backstop visual test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: install project dependecies and playwright
+        run: npm install &&  npx playwright install
+
+      - name: Generate config file based on the sitemap
+        run: npm run backstop:generate
+
+      - name: Create reference screenshot from source site
+        run: npm run backstop:reference
+
+      - name: Run the test(It will take the screenshot of the given site and will test against reference screenshot)
+        continue-on-error: true
+        run: npm run backstop:test
+
+      - name: Create Artifacts
+        run: |
+          mkdir -p artifacts
+          cp -r backstop_data artifacts/
+          cp -r public artifacts/
+          cp -r reports artifacts/
+
+      - name: Upload references data
+        uses: actions/upload-artifact@v4
+        with:
+          name: backstop_report
+          path: artifacts
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
