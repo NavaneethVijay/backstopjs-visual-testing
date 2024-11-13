@@ -49,7 +49,7 @@ For more configuration visit: https://github.com/garris/BackstopJS
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/NavaneethVijay/backstopjs-visual-testing.git
 cd backstopjs-visual-testing
 ```
 
