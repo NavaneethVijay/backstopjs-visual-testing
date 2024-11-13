@@ -6,10 +6,6 @@ env:
 
 on:
   workflow_dispatch:
-    inputs:
-      test_id:
-        description: "Test Name"
-        required: true
 
 jobs:
   test_and_deploy:
