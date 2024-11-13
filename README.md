@@ -117,6 +117,8 @@ npm run dev
    - `VERCEL_PROJECT_ID`
    - `VERCEL_TOKEN`
 
+More details on: https://vercel.com/guides/how-can-i-use-github-actions-with-vercel
+
 2. The workflow will:
    - Generate configuration files
    - Create reference screenshots
